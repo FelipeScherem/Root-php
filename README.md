@@ -1,57 +1,125 @@
-# Guia de Configuração do PHP e Xdebug
+# Root404
 
-## COMO BAIXAR PHP
+## Descrição
 
-1. **Baixar PHP**
-    - Acesse o site oficial do PHP: [PHP Downloads](https://windows.php.net/download/).
-    - Escolha a versão desejada do PHP e faça o download do arquivo `.zip` correspondente à sua arquitetura (x86 ou x64) e tipo (Thread Safe ou Non-Thread Safe).
+**Root404** é um CRUD desenvolvido para estudo do PHP e suas tecnologias.
+Seu nome root é para ser uma brincadeira com "raiz não encontrada" assim como meu conhecimento inicial em PHP.  
+Este projeto visa ser parte do meu portifolio para atrair recrutadores.
 
-2. **Adicionar Variáveis de Ambiente**
-    - Extraia o conteúdo do arquivo `.zip` para um diretório, por exemplo, `C:\tools\php`.
-    - Adicione o diretório `C:\tools\php` às variáveis de ambiente do sistema:
-        - Abra o **Painel de Controle**.
-        - Vá para **Sistema e Segurança > Sistema > Configurações Avançadas do Sistema**.
-        - Clique em **Variáveis de Ambiente**.
-        - Na seção **Variáveis de sistema**, encontre e selecione a variável **Path**, depois clique em **Editar**.
-        - Adicione um novo valor para o diretório `C:\tools\php` e clique em **OK**.
 
-3. **Adicionar no PHPStorm**
-    - Abra o PHPStorm.
-    - Vá para `File > Settings` (ou `Ctrl+Alt+S`).
-    - Selecione `Languages & Frameworks > PHP`.
-    - Em **CLI Interpreter**, clique no ícone de **+** para adicionar um novo interpretador.
-    - Selecione **PHP Executable** e navegue até o diretório onde você extraiu o PHP (por exemplo, `C:\tools\php\php.exe`).
-    - Clique em **OK** para confirmar a adição.
+## Funcionalidade
 
-## COMO INSTALAR XDEBUG
+- **Funcionalidade**: Criar, autenticar e gerenciar usuarios, categorias, produtos.
 
-1. **Usar o Xdebug Wizard**
-    - Acesse o [Xdebug Wizard](https://xdebug.org/wizard).
-    - Copie e cole o conteúdo da saída do comando `php -i` na caixa de texto e clique em **Analyze**.
-    - O Wizard fornecerá o link para a versão correta do arquivo `.dll` do Xdebug compatível com a sua versão do PHP.
+## Tecnologias Usadas
 
-2. **Lugar da DLL**
-    - Baixe o arquivo `.dll` fornecido pelo Wizard.
-    - Copie o arquivo `.dll` para o diretório `ext` do PHP, por exemplo, `C:\tools\php\ext`.
+O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-3. **Configurar no PHPStorm**
-    - Abra o PHPStorm.
-    - Vá para `File > Settings` (ou `Ctrl+Alt+S`).
-    - Selecione `Languages & Frameworks > PHP > Debug`.
-    - Em **Xdebug**, verifique se a porta está configurada (normalmente a porta padrão é 9003).
-    - Vá para `Languages & Frameworks > PHP > Servers` e adicione um novo servidor se necessário, configurando a URL e o caminho do servidor local.
+- [PHP 8.3](https://www.php.net/) - Linguagem de programação
+- [MySQL](https://www.mysql.com/) - Sistema de gerenciamento de banco de dados
+- [Laravel Eloquent](https://laravel.com/docs/11.x/eloquent) - ORM do Laravel para interações com o banco de dados
+- [Swagger](https://swagger.io/) - Documentação da API
 
-4. **Configurar o PHP para usar o Xdebug**
-    - Edite o arquivo `php.ini` localizado no diretório onde você extraiu o PHP (por exemplo, `C:\tools\php\php.ini`).
-    - Adicione as seguintes linhas ao final do arquivo:
+## Instalação
 
-      ```ini
-      [xdebug]
-      zend_extension = "C:\tools\php\ext\php_xdebug.dll"
-      xdebug.mode = debug
-      xdebug.start_with_request = yes
-      xdebug.client_host = 127.0.0.1
-      xdebug.client_port = 9003
-      ```
+Para instalar e configurar o projeto localmente, siga os passos abaixo:
 
-    - Salve o arquivo `php.ini` e reinicie o servidor PHP embutido ou o servidor web para aplicar as alterações.
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/FelipeScherem/Root404-php
+   ```
+
+2. Navegue até o diretório do projeto:
+   ```bash
+   cd projeto-root
+   ```
+
+3. Instale as dependências do Composer:
+   ```bash
+   composer install
+   ```
+4. **Configuração do Docker**
+
+   As instruções para configurar o projeto utilizando Docker podem ser encontradas no arquivo `README.md` localizado no diretório `project-root/Dockerfile`.
+
+   
+
+5. Inicie o servidor:
+   ```bash
+   php -S localhost:8080 -t public
+   ```
+
+# Uso
+
+## Rotas da API
+Até a documentação do swagger estar pronta, estarei comentando e disponibilizando informações por aqui.
+
+### Produtos
+
+- **Cria um novo produto.**
+   - **Método:** `POST`
+   - **URL:** `localhost:8080/produtos`
+
+- **Atualiza um produto existente.**
+   - **Método:** `PUT`
+   - **URL:** `localhost:8080/produtos`
+
+- **Lista todos os produtos.**
+   - **Método:** `GET`
+   - **URL:** `localhost:8080/produtos`
+
+- **Busca um produto pelo ID.**
+   - **Método:** `GET`
+   - **URL:** `localhost:8080/produtos/{id}`
+   - **Parâmetro:**
+      - `id`: ID do produto (número).
+
+- **Deleta um produto pelo ID.**
+   - **Método:** `DELETE`
+   - **URL:** `localhost:8080/produtos/{id}`
+   - **Parâmetro:**
+      - `id`: ID do produto (número).
+
+### Categorias (Comentadas)
+
+- **Cria uma nova categoria.**
+   - **Método:** `POST`
+   - **URL:** `localhost:8080/categoria`
+
+- **Lista todas as categorias.**
+   - **Método:** `GET`
+   - **URL:** `localhost:8080/categoria`
+
+- **Atualiza uma categoria existente.**
+   - **Método:** `PUT`
+   - **URL:** `localhost:8080/categoria`
+
+- **Deleta uma categoria.**
+   - **Método:** `DELETE`
+   - **URL:** `localhost:8080/categoria`
+
+### Usuários (Comentadas)
+
+- **Cria um novo usuário.**
+   - **Método:** `POST`
+   - **URL:** `localhost:8080/usuario`
+
+- **Lista todos os usuários.**
+   - **Método:** `GET`
+   - **URL:** `localhost:8080/usuario`
+
+- **Atualiza um usuário existente.**
+   - **Método:** `PUT`
+   - **URL:** `localhost:8080/usuario`
+
+- **Deleta um usuário.**
+   - **Método:** `DELETE`
+   - **URL:** `localhost:8080/usuario`
+
+
+## Contato
+
+Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato:
+
+- Nome: Felipe Scherem
+- Email: felipe.scherem2014@gmail.com
