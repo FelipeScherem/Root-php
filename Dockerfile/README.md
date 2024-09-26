@@ -1,5 +1,11 @@
 # Passos para Configuração do Container PHP e MySQL
 
+## Descrição
+
+Com objetivo de deixar o processo o mais simples, automatizei alguns processos.  
+Basta seguir os comandos abaixo para ter seu container rodando 
+
+
 1. **Construa a imagem Docker**
     ```powershell
     docker build -t meu-container-php-mysql .
