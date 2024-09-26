@@ -52,69 +52,9 @@ Para instalar e configurar o projeto localmente, siga os passos abaixo:
 # Uso
 
 ## Rotas da API
-Até a documentação do swagger estar pronta, estarei comentando e disponibilizando informações por aqui.
+Até a documentação do swagger estar pronta;
 
-### Produtos
-
-- **Cria um novo produto.**
-   - **Método:** `POST`
-   - **URL:** `localhost:8080/produtos`
-
-- **Atualiza um produto existente.**
-   - **Método:** `PUT`
-   - **URL:** `localhost:8080/produtos`
-
-- **Lista todos os produtos.**
-   - **Método:** `GET`
-   - **URL:** `localhost:8080/produtos`
-
-- **Busca um produto pelo ID.**
-   - **Método:** `GET`
-   - **URL:** `localhost:8080/produtos/{id}`
-   - **Parâmetro:**
-      - `id`: ID do produto (número).
-
-- **Deleta um produto pelo ID.**
-   - **Método:** `DELETE`
-   - **URL:** `localhost:8080/produtos/{id}`
-   - **Parâmetro:**
-      - `id`: ID do produto (número).
-
-### Categorias (Comentadas)
-
-- **Cria uma nova categoria.**
-   - **Método:** `POST`
-   - **URL:** `localhost:8080/categoria`
-
-- **Lista todas as categorias.**
-   - **Método:** `GET`
-   - **URL:** `localhost:8080/categoria`
-
-- **Atualiza uma categoria existente.**
-   - **Método:** `PUT`
-   - **URL:** `localhost:8080/categoria`
-
-- **Deleta uma categoria.**
-   - **Método:** `DELETE`
-   - **URL:** `localhost:8080/categoria`
-
-### Usuários (Comentadas)
-
-- **Cria um novo usuário.**
-   - **Método:** `POST`
-   - **URL:** `localhost:8080/usuario`
-
-- **Lista todos os usuários.**
-   - **Método:** `GET`
-   - **URL:** `localhost:8080/usuario`
-
-- **Atualiza um usuário existente.**
-   - **Método:** `PUT`
-   - **URL:** `localhost:8080/usuario`
-
-- **Deleta um usuário.**
-   - **Método:** `DELETE`
-   - **URL:** `localhost:8080/usuario`
+https://www.postman.com/root404/workspace/root404-workspace/collection/21048576-eca8aa25-0c18-4302-b661-c9b43eea1a47?action=share&creator=21048576
 
 
 ## Contato
