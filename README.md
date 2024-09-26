@@ -52,9 +52,9 @@ Para instalar e configurar o projeto localmente, siga os passos abaixo:
 # Uso
 
 ## Rotas da API
-Até a documentação do swagger estar pronta;
+Até a documentação do swagger estar pronta, você pode usar o postman para verificar e rodar 
 
-https://www.postman.com/root404/workspace/root404-workspace/collection/21048576-eca8aa25-0c18-4302-b661-c9b43eea1a47?action=share&creator=21048576
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/21048576-eca8aa25-0c18-4302-b661-c9b43eea1a47?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D21048576-eca8aa25-0c18-4302-b661-c9b43eea1a47%26entityType%3Dcollection%26workspaceId%3D1d8728b1-fe65-4601-8959-0423262f062f)
 
 
 ## Contato
