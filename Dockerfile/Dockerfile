@@ -23,14 +23,22 @@ COPY . /var/www/html
 # Exponha as portas necessárias
 EXPOSE 3306 8080
 
-# Inicialize o MySQL e o servidor embutido PHP
+# Defina um volume para persistência dos dados do MySQL
+VOLUME ["/var/lib/mysql"]
+
+# Inicialize o MySQL e o servidor PHP
 CMD service mysql start && \
     sleep 5 && \
-    mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" && \
-    mysql -uroot -proot ${MYSQL_DATABASE} < /var/www/html/script.sql && \
-    mysql -uroot -proot -e "CREATE USER 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" && \
-    mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;" && \
-    mysql -uroot -proot -e "FLUSH PRIVILEGES;" && \
+    if [ ! -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then \
+        echo "Inicializando o banco de dados"; \
+        mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" && \
+        mysql -uroot -proot ${MYSQL_DATABASE} < /var/www/html/script.sql && \
+        mysql -uroot -proot -e "CREATE USER 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" && \
+        mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;" && \
+        mysql -uroot -proot -e "FLUSH PRIVILEGES;"; \
+    else \
+        echo "Banco de dados já existe, pulando a inicialização."; \
+    fi && \
     sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf && \
     service mysql restart && \
     php -S 0.0.0.0:8000 -t /var/www/html

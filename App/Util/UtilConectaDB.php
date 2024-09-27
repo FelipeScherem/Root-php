@@ -3,33 +3,42 @@ namespace App\Util;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-Use PDO;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class UtilConectaDB
 {
-    private static $pdo;
+	public static function setConnection() {
+		$capsule = new Capsule;
 
-    public static function getConnection()
-    {
-        if (self::$pdo === null) {
-            $host = '127.0.0.1:3306';
-            $dbname = 'loja404';
-            $user = 'root';
-            $pass = 'root';
+		$host = '127.0.0.1'; // Apenas o IP
+		$port = '3306'; // Porta separada
+		$dbname = 'loja404';
+		$user = 'root';
+		$pass = 'root';
 
-            $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
+		try {
+			$capsule->addConnection([
+				'driver' => 'mysql',
+				'host' => $host,
+				'port' => $port, // Passando a porta aqui
+				'database' => $dbname,
+				'username' => $user,
+				'password' => $pass,
+				'charset' => 'utf8mb4',
+				'collation' => 'utf8mb4_unicode_ci',
+				'prefix' => '',
+			]);
 
-            try {
-                self::$pdo = new PDO($dsn, $user, $pass);
-                self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                echo "Conectado com sucesso!";
-            } catch (\PDOException $e) {
-                echo json_encode(['mensagem' => 'Houve um erro ao conectar-se ao bando de dados',
-                                  'erro' => $e->getMessage()]);
-                exit;
-            }
-        }
+			echo json_encode(['mensagem' => 'Conectado ao DB com sucesso!']);
 
-        return self::$pdo;
-    }
+			// Configura o Eloquent para usar o Capsule
+			$capsule->setAsGlobal();
+			$capsule->bootEloquent();
+
+		} catch (\PDOException $e) {
+			echo json_encode(['mensagem' => 'Houve um erro ao conectar-se ao banco de dados',
+				'erro' => $e->getMessage()]);
+			exit;
+		}
+	}
 }
