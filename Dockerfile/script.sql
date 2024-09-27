@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 -- Cria a tabela tb_categoria_produto
 -- Esta tabela armazena as categorias dos produtos
 CREATE TABLE IF NOT EXISTS `tb_categoria_produto` (
-                                                      `id_categoria_planejamento` int(11) NOT NULL,
+                                                      `id_categoria_planejamento` int(11) NOT NULL AUTO_INCREMENT,
                                                       `nome_categoria` varchar(150) NOT NULL,
                                                       PRIMARY KEY (`id_categoria_planejamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `tb_categoria_produto` (
 -- Cria a tabela tb_produto
 -- Esta tabela armazena informações sobre os produtos
 CREATE TABLE IF NOT EXISTS `tb_produto` (
-                                            `id_produto` int(11) NOT NULL,
+                                            `id_produto` int(11) NOT NULL AUTO_INCREMENT,
                                             `id_categoria_produto` int(11) DEFAULT NULL,
                                             `data_cadastro` datetime NOT NULL,
                                             `nome_produto` varchar(150) NOT NULL,
@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `tb_produto` (
 
 -- Finaliza a transação, aplicando todas as alterações
 COMMIT;
+
 
 -- Inserção de categorias
 INSERT INTO `tb_categoria_produto` (`id_categoria_planejamento`, `nome_categoria`)

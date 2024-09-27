@@ -3,5 +3,4 @@
 require '../vendor/autoload.php';
 
 use App\Util\UtilConectaDB;
-
-UtilConectaDB::getConnection();
+UtilConectaDB::setConnection();

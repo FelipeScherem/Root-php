@@ -3,17 +3,21 @@
 use FastRoute\RouteCollector;
 
 return function (RouteCollector $r) {
+	// Rotas para produtos
 	$r->post('/produtos', 'ControllerProduto:produtoCriar');
-	$r->put('/produtos', 'ControllerProduto:produtoAtualizar');
 	$r->get('/produtos', 'ControllerProduto:produtoListar');
-	$r->get('/produtos/{id:\d+}', 'ControllerProduto:produtoBuscar');
-	$r->delete('/produtos/{id:\d+}', 'ControllerProduto:produtoDeletar');
+	$r->put('/produtos', 'ControllerProduto:produtoAtualizar');
+	$r->delete('/produtos', 'ControllerProduto:produtoDeletar');
+	//$r->get('/produtos/{id:\d+}', 'ControllerProduto:produtoBuscar');
 
-	// ####################################### CATEGORIAS #######################################
-	// $r->addRoute('POST', '/categoria', 'ControllerCategoria:categoriaCriar');
-	// $r->addRoute('GET', '/categoria', 'ControllerCategoria:categoriaListar');
-	// $r->addRoute('PUT', '/categoria', 'ControllerCategoria:categoriaAtualizar');
-	// $r->addRoute('DELETE', '/categoria', 'ControllerCategoria:categoriaDeletar');
+	####################################### CATEGORIAS #######################################
+
+	// Ajuste as rotas de categorias
+	$r->post('/categorias', 'ControllerCategoria:categoriaCriar'); // Cria nova categoria
+	$r->get('/categorias', 'ControllerCategoria:categoriaListar'); // Lista categorias
+	$r->put('/categorias/{id:\d+}', 'ControllerCategoria:categoriaAtualizar'); // Atualiza categoria por ID
+	$r->delete('/categorias/{id:\d+}', 'ControllerCategoria:categoriaDeletar'); // Deleta categoria por ID
+	//$r->get('/categorias/{id:\d+}', 'ControllerCategoria:categoriaBuscar');
 
 	// ######################################## USUARIOS ########################################
 	// $r->addRoute('POST', '/usuario', 'ControllerUsuario:usuarioCriar');
