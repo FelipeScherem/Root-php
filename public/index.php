@@ -54,10 +54,10 @@ function handleRoot(): void {
 
 function handleNotFound(): void {
 	http_response_code(404);
-	echo json_encode(['error' => 'Not Found']);
+	echo json_encode(['error' => 'Rota não encontrada']);
 }
 
 function handleMethodNotAllowed(): void {
 	http_response_code(405);
-	echo json_encode(['error' => 'Method Not Allowed']);
+	echo json_encode(['error' => 'Metodo não permitido']);
 }
