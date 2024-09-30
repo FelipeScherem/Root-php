@@ -5,9 +5,9 @@ require '../vendor/autoload.php';
 try {
 	// Verificar se o arquivo .env existe
 	if (file_exists(dirname(__DIR__) . '/.env')) {
-		echo '.env file exists.' . PHP_EOL;
+		echo 'Arquivo .env localizado' . PHP_EOL;
 	} else {
-		echo '.env file does not exist.' . PHP_EOL;
+		echo 'Arquivo .env não existe.' . PHP_EOL;
 	}
 
 	// Carregar as variáveis de ambiente
@@ -15,11 +15,8 @@ try {
 	$dotenv->load();
 
 	// Depuração
-	var_dump(getenv('DB_HOST'));
-	var_dump(getenv('DB_PORT'));
-	var_dump(getenv('DB_NAME'));
-	var_dump(getenv('DB_USER'));
-	var_dump(getenv('DB_PASS'));
+	var_dump($_ENV);
+
 } catch (Exception $e) {
-	echo 'Error loading .env: ' . $e->getMessage();
+	echo 'Erro ao carregar .env: ' . $e->getMessage();
 }
