@@ -33,5 +33,6 @@ return array(
     'App\\Util\\' => array($baseDir . '/App/Util'),
     'App\\Repositories\\' => array($baseDir . '/App/Repositories'),
     'App\\Models\\' => array($baseDir . '/App/Models'),
+    'App\\Interfaces\\' => array($baseDir . '/App/Interfaces'),
     'App\\Controllers\\' => array($baseDir . '/App/Controllers'),
 );

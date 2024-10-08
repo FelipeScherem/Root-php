@@ -13,11 +13,11 @@ return function (RouteCollector $r) {
 	####################################### CATEGORIAS #######################################
 
 	// Ajuste as rotas de categorias
-	$r->post('/categorias', 'ControllerCategoria:categoriaCriar'); // Cria nova categoria
-	$r->get('/categorias', 'ControllerCategoria:categoriaListar'); // Lista categorias
-	$r->put('/categorias', 'ControllerCategoria:categoriaAtualizar'); // Atualiza categoria por ID
-	$r->delete('/categorias', 'ControllerCategoria:categoriaDeletar'); // Deleta categoria por ID
-	//$r->get('/categorias/{id:\d+}', 'ControllerCategoria:categoriaBuscar');
+	$r->post('/categorias', 'ControllerCategoria:categoriaCriar');      // Cria nova categoria
+	$r->get('/categorias', 'ControllerCategoria:categoriaListar');      // Lista categorias
+	$r->put('/categorias', 'ControllerCategoria:categoriaAtualizar');   // Atualiza categoria por ID
+	$r->delete('/categorias', 'ControllerCategoria:categoriaDeletar');  // Deleta categoria por ID
+	$r->get('/categorias-buscar', 'ControllerCategoria:categoriaBuscar');
 
 	// ######################################## USUARIOS ########################################
 	// $r->addRoute('POST', '/usuario', 'ControllerUsuario:usuarioCriar');
