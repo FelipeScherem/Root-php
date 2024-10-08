@@ -6,8 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/App/Models" isTestSource="false" packagePrefix="App\Models\" />
       <sourceFolder url="file://$MODULE_DIR$/App/Repositories" isTestSource="false" packagePrefix="App\Repositories\" />
       <sourceFolder url="file://$MODULE_DIR$/App/Util" isTestSource="false" packagePrefix="App\Util\" />
-      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/App/Interfaces" isTestSource="false" packagePrefix="App\Interfaces\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/fast-route" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/graham-campbell/result-type" />
