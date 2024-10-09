@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use Throwable;
 use App\Models\ModelCategoria;
 use App\Interfaces\InterfaceCategoria;
 

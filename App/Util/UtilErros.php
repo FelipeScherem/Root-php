@@ -2,17 +2,27 @@
 
 namespace App\Util;
 
-class UtilErros {
+class UtilErros
+{
+	public static function erroSQL(int $codigoHttp, \Exception $e) {
+		// Prepara os dados do erro
+		$data = array("Código do erro" => $e->getCode(), "Mensagem de erro" => $e->getMessage(), "SQLSTATE" => $e->getTraceAsString());
 
-    // Faz a tratativa e retorna um json
-    public static function ErroSQL(array $array) {
-        $data = array(
-            "SQLSTATE" => $array[0],
-            "Código do erro" => $array[1],
-            "Mensagem de erro" => $array[2],
-        );
+		// Define o código de resposta HTTP
+		http_response_code($codigoHttp);
 
-        // Converte o array para JSON e retorna
-        return json_encode($data);
-    }
+		// Retorna o JSON
+		echo json_encode($data);
+	}
+
+	public static function erroCamposInvalidos(int $codigoHttp, string $mensagem, ?string $campo = NULL): void {
+		http_response_code($codigoHttp);
+		$resposta = ['mensagem' => $mensagem];
+
+		if ($campo) {
+			$resposta['campo'] = $campo;
+		}
+
+		echo json_encode($resposta);
+	}
 }

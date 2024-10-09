@@ -2,27 +2,31 @@
 
 namespace App\Repositories;
 
-use PDO;
+use App\Models\ModelProduto;
 
 class RepositoryProduto
 {
-	public function produtoCriar(array $dadosq) {
+	public function produtoCriar(ModelProduto $modelProduto) {
 
 	}
 
 	public function produtoListar() {
-		return "Lista de produtos!";
+		try {
+			return ModelProduto::all();
+		} catch (\Exception $exception) {
+			return $exception->getMessage();
+		}
 	}
 
-	public function produtoAtualizar() {
-		return "Atualizado com sucesso!";
+	public function produtoAtualizar(ModelProduto $modelProduto) {
+
 	}
 
-	public function produtoDeletar() {
-		return "Deletado com sucesso!";
+	public function produtoDeletar(ModelProduto $modelProduto) {
+
 	}
 
-	public function produtoBuscar() {
-		return "Buscado com sucesso!";
+	public function produtoBuscar(ModelProduto $modelProduto) {
+
 	}
 }
