@@ -8,7 +8,7 @@ return function (RouteCollector $r) {
 	$r->get('/produtos', 'ControllerProduto:produtoListar');
 	$r->put('/produtos', 'ControllerProduto:produtoAtualizar');
 	$r->delete('/produtos', 'ControllerProduto:produtoDeletar');
-	//$r->get('/produtos/{id:\d+}', 'ControllerProduto:produtoBuscar');
+	$r->get('/produtos-buscar', 'ControllerProduto:produtoBuscar');
 
 	####################################### CATEGORIAS #######################################
 

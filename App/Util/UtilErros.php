@@ -6,7 +6,7 @@ class UtilErros
 {
 	public static function erroSQL(int $codigoHttp, \Exception $e) {
 		// Prepara os dados do erro
-		$data = array("Código do erro" => $e->getCode(), "Mensagem de erro" => $e->getMessage(), "SQLSTATE" => $e->getTraceAsString());
+		$data = array("Código do erro" => $e->getCode(), "Mensagem de erro" => $e->getMessage());
 
 		// Define o código de resposta HTTP
 		http_response_code($codigoHttp);
@@ -24,5 +24,6 @@ class UtilErros
 		}
 
 		echo json_encode($resposta);
+		exit;
 	}
 }

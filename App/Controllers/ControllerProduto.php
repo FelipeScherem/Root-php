@@ -2,13 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Util\Util;
 use App\Util\UtilErros;
-use App\Util\UtilTryCatch;
 use App\Models\ModelProduto;
 use App\Repositories\RepositoryProduto;
 
 class ControllerProduto
 {
+	// ###################### Construct #######################
 	private $produtoRepository;
 	private $produtoModel;
 
@@ -17,91 +18,27 @@ class ControllerProduto
 		$this->produtoModel = new ModelProduto();
 	}
 
-	// Method: POST
-	public function produtoCriar(): void {
-		$requestProduto = $this->BindJson();
-		if (!$this->ValidarRequest($requestProduto)) {
-			return;
-		}
-
-		$modelProduto = $this->PopulaModel($requestProduto);
-
-		UtilTryCatch::executaComFuncao(function () use ($modelProduto) {
-			$this->produtoRepository->produtoCriar($modelProduto);
-			http_response_code(201);
-			echo json_encode(['message' => 'Produto criado com sucesso!']);
-		});
-	}
-
-	// Method: GET
-	public function produtoListar(): void {
-		UtilTryCatch::executaComFuncao(function () {
-			$produtos = $this->produtoRepository->produtoListar();
-			http_response_code(200);
-			echo json_encode($produtos);
-		});
-	}
-
-	// Method: PUT
-	public function produtoAtualizar(): void {
-		$requestProduto = $this->BindJson();
-		if ($this->ValidarRequest($requestProduto)) {
-			return;
-		}
-
-		$modelProduto = $this->PopulaModel($requestProduto);
-
-		UtilTryCatch::executaComFuncao(function () use ($modelProduto) {
-			$this->produtoRepository->produtoAtualizar($modelProduto);
-			http_response_code(200);
-			echo json_encode(['message' => 'Produto atualizado com sucesso!']);
-		});
-	}
-
-	// Method: DELETE
-	public function produtoDeletar(): void {
-		$requestProduto = $this->BindJson();
-		if (!isset($requestProduto['id_produto']) || !is_int($requestProduto['id_produto'])) {
-			UtilErros::erroCamposInvalidos(400, 'Campo deve ser um int', 'id_produto');
-			return;
-		}
-
-		$modelProduto = $this->produtoModel;
-		$modelProduto->id_produto = $requestProduto['id_produto'];
-
-		UtilTryCatch::executaComFuncao(function () use ($modelProduto) {
-			$this->produtoRepository->produtoDeletar($modelProduto);
-			http_response_code(200);
-			echo json_encode(['message' => 'Produto deletado com sucesso!']);
-		});
-	}
-
-	private function ValidarRequest(mixed $requestProduto): bool {
+	//  ################ Funções de validação ######################
+	private function ValidarRequest(mixed $requestProduto): void {
 		if (!isset($requestProduto['id_categoria'])) {
 			UtilErros::erroCamposInvalidos(400, 'ID de categoria do produto, vazio', 'id_categoria');
-			return FALSE;
 		}
 
 		if (!is_int($requestProduto['id_categoria'])) {
 			UtilErros::erroCamposInvalidos(400, 'ID de categoria do produto, deve ser um inteiro', 'id_categoria');
-			return FALSE;
 		}
 
 		if (!isset($requestProduto['nome_do_produto'])) {
 			UtilErros::erroCamposInvalidos(400, 'Nome do produto, vazio', 'nome_do_produto');
-			return FALSE;
 		}
 
 		if (!isset($requestProduto['valor_produto'])) {
 			UtilErros::erroCamposInvalidos(400, 'Valor do produto, vazio', 'valor_produto');
-			return FALSE;
 		}
 
 		if (!is_float($requestProduto['valor_produto'])) {
 			UtilErros::erroCamposInvalidos(400, 'Valor do produto, deve ser um float', 'valor_produto');
-			return FALSE;
 		}
-		return TRUE;
 	}
 
 	private function PopulaModel($requestProduto): ModelProduto {
@@ -113,14 +50,86 @@ class ControllerProduto
 		return $modelProduto;
 	}
 
-	private function BindJson() {
-		$requestProduto = json_decode(file_get_contents('php://input'), TRUE);
+	// #################### END-POINTS ####################
+	// Method: POST
+	public function produtoCriar(): void {
+		$requestProduto = Util::bindJson();
+		$this->ValidarRequest($requestProduto);
 
-		if ($requestProduto === NULL) {
-			UtilErros::erroCamposInvalidos(400, 'Request inválidos', 'JSON body');
-			return NULL;
+		$modelProduto = $this->PopulaModel($requestProduto);
+
+		Util::tryCatchChamaRepository(function () use ($modelProduto) {
+			$idProdutp = $this->produtoRepository->produtoCriar($modelProduto);
+			http_response_code(201);
+			echo json_encode(['id' => $idProdutp, 'message' => 'Produto criado com sucesso!']);
+		});
+	}
+
+	// Method: GET
+	public function produtoListar(): void {
+		Util::tryCatchChamaRepository(function () {
+			$produtos = $this->produtoRepository->produtoListar();
+			http_response_code(200);
+			echo json_encode($produtos);
+		});
+	}
+
+	// Method: PUT
+	public function produtoAtualizar(): void {
+		$requestProduto = Util::bindJson();
+		$this->ValidarRequest($requestProduto);
+
+		// Busca o produto existente
+		$produtoExistente = $this->produtoModel->find($requestProduto['id_produto']);
+		if (!$produtoExistente) {
+			UtilErros::erroCamposInvalidos(404, 'Produto não encontrado');
 		}
 
-		return $requestProduto;
+		// Preenche os campos que serão atualizados
+		$produtoExistente->fill(['id_categoria_produto' => $requestProduto['id_categoria'], 'nome_produto' => $requestProduto['nome_do_produto'], 'valor_produto' => $requestProduto['valor_produto'],]);
+
+		Util::tryCatchChamaRepository(function () use ($produtoExistente) {
+			$produtoExistente->save(); // Atualiza o produto
+		});
+
+		http_response_code(200);
+		echo json_encode(['message' => 'Produto atualizado com sucesso!']);
+	}
+
+	// Method: DELETE
+	public function produtoDeletar(): void {
+		$requestProduto = Util::bindJson();
+		if (!isset($requestProduto['id_produto']) || !is_array($requestProduto['id_produto'])) {
+			UtilErros::erroCamposInvalidos(400, 'Campo deve ser um  array de int', 'id_produto');
+			return;
+		}
+
+		foreach ($requestProduto['id_produto'] as $id) {
+			if (!is_numeric($id)) {
+				UtilErros::erroCamposInvalidos(400, 'Campo deve ser um  array de int', 'id_produto');
+			}
+		}
+
+		$id_produto = $requestProduto['id_produto'];
+
+		foreach ($id_produto as $id) {
+			Util::tryCatchChamaRepository(function () use ($id) {
+				$this->produtoRepository->produtoDeletar($id);
+				http_response_code(200);
+				echo json_encode(['message' => 'Produto deletado com sucesso!']);
+			});
+		}
+
+	}
+
+	public function produtoBuscar(): void {
+		$requestBusca = Util::bindJson();
+		Util::validaBusca($requestBusca);
+
+		Util::tryCatchChamaRepository(function () use ($requestBusca) {
+			$resultadoDaBusca = $this->produtoRepository->produtoBuscar($requestBusca);
+			http_response_code(200);
+			echo json_encode($resultadoDaBusca);
+		});
 	}
 }

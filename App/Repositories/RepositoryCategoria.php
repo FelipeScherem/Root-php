@@ -13,7 +13,7 @@ class RepositoryCategoria implements InterfaceCategoria
 			// Salva o produto no banco de dados
 			$modelCategoria->save();
 		} catch (\Exception $exception) {
-			return $exception->getMessage();
+			throw $exception;
 		}
 
 		// Retorna o ID do produto criado
@@ -24,7 +24,7 @@ class RepositoryCategoria implements InterfaceCategoria
 		try {
 			return ModelCategoria::all();
 		} catch (\Exception $exception) {
-			return $exception->getMessage();
+			throw $exception;
 		}
 	}
 
@@ -33,7 +33,7 @@ class RepositoryCategoria implements InterfaceCategoria
 			// Atualize apenas os campos necessários
 			$modelCategoria->save(['nome_categoria' => $modelCategoria->nome_categoria]);
 		} catch (\Exception $exception) {
-			return $exception->getMessage();
+			throw $exception;
 		}
 		return NULL;
 	}
@@ -42,8 +42,8 @@ class RepositoryCategoria implements InterfaceCategoria
 		try {
 			ModelCategoria::where('id_categoria_planejamento', $idCategoria)->delete();
 			return TRUE;
-		} catch (\Exception $e) {
-			return $e->getMessage();
+		} catch (\Exception $exception) {
+			throw $exception;
 		}
 	}
 
@@ -64,8 +64,8 @@ class RepositoryCategoria implements InterfaceCategoria
 
 		try {
 			$dadosPesquisa = ModelCategoria::where($campoDeBusca, 'LIKE', "%{$parametroDeBusca}%")->get();
-		} catch (\Exception $e) {
-			return $e->getMessage();
+		} catch (\Exception $exception) {
+			throw $exception;
 		}
 
 		return $dadosPesquisa;
